@@ -1,7 +1,7 @@
-import React, { SyntheticEvent } from 'react';
-import Card from '../Card/Card';
-import { CompanySearch } from '../../company';
-import { v4 as uuidv4 } from 'uuid';
+import React, { SyntheticEvent } from "react";
+import Card from "../Card/Card";
+import { CompanySearch } from "../../company";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   searchResults: CompanySearch[];
@@ -13,7 +13,7 @@ const CardList: React.FC<Props> = ({
   onPortfolioCreate,
 }: Props): JSX.Element => {
   return (
-    <>
+    <div>
       {searchResults.length > 0 ? (
         searchResults.map((result) => {
           return (
@@ -30,7 +30,7 @@ const CardList: React.FC<Props> = ({
           No results!
         </p>
       )}
-    </>
+    </div>
   );
 };
 

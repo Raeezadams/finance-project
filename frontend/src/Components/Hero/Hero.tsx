@@ -1,7 +1,7 @@
-import React from 'react';
-import hero from './hero.png';
-import { Link } from 'react-router-dom';
-import SearchPage from '../../Pages/SearchPage/SearchPage';
+import React from "react";
+import { Link } from "react-router-dom";
+import hero from "./hero.png";
+import "./Hero.css";
 
 interface Props {}
 
@@ -19,7 +19,7 @@ const Hero = (props: Props) => {
           </p>
           <div className="mx-auto lg:mx-0">
             <Link
-              to="./search"
+              to="/search"
               className="py-5 px-10 text-2xl font-bold text-white bg-lightGreen rounded lg:py-4 hover:opacity-70"
             >
               Get Started
