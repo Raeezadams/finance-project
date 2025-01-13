@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "./logo.png";
-import "./Navbar.css";
-import { useAuth } from "../../Context/useAuth";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from './logo.png';
+import './NavBar.css';
+import { useAuth } from '../../Context/useAuth';
 
 interface Props {}
 
-const Navbar = (props: Props) => {
+const NavBar = (props: Props) => {
   const { isLoggedIn, user, logout } = useAuth();
   return (
     <nav className="relative container mx-auto p-6">
@@ -49,4 +49,4 @@ const Navbar = (props: Props) => {
   );
 };
 
-export default Navbar;
+export default NavBar;

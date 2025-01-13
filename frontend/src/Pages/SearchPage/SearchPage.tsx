@@ -1,22 +1,22 @@
-import React, { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
-import Navbar from "../../Components/Navbar/Navbar";
-import { CompanySearch } from "../../company";
-import { searchCompanies } from "../../api";
-import Search from "../../Components/Search/Search";
-import ListPortfolio from "../../Components/Portfolio/ListPortfolio/ListPortfolio";
-import CardList from "../../Components/CardList/CardList";
-import { PortfolioGet } from "../../Models/Portfolio";
+import React, { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react';
+import NavBar from '../../Components/NavBar/NavBar';
+import { CompanySearch } from '../../company';
+import { searchCompanies } from '../../api';
+import Search from '../../Components/Search/Search';
+import ListPortfolio from '../../Components/Portfolio/ListPortfolio/ListPortfolio';
+import CardList from '../../Components/CardList/CardList';
+import { PortfolioGet } from '../../Models/Portfolio';
 import {
   portfolioAddAPI,
   portfolioDeleteAPI,
   portfolioGetAPI,
-} from "../../Services/PortfolioService";
-import { toast } from "react-toastify";
+} from '../../Services/PortfolioService';
+import { toast } from 'react-toastify';
 
 interface Props {}
 
 const SearchPage = (props: Props) => {
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
   const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>(
     []
   );
@@ -48,12 +48,12 @@ const SearchPage = (props: Props) => {
     portfolioAddAPI(e.target[0].value)
       .then((res) => {
         if (res?.status === 204) {
-          toast.success("Stock added to portfolio!");
+          toast.success('Stock added to portfolio!');
           getPortfolio();
         }
       })
       .catch((e) => {
-        toast.warning("Could not add stock to portfolio!");
+        toast.warning('Could not add stock to portfolio!');
       });
   };
 
@@ -61,7 +61,7 @@ const SearchPage = (props: Props) => {
     e.preventDefault();
     portfolioDeleteAPI(e.target[0].value).then((res) => {
       if (res?.status == 200) {
-        toast.success("Stock deleted from portfolio!");
+        toast.success('Stock deleted from portfolio!');
         getPortfolio();
       }
     });
@@ -71,7 +71,7 @@ const SearchPage = (props: Props) => {
     e.preventDefault();
     const result = await searchCompanies(search);
     //setServerError(result.data);
-    if (typeof result === "string") {
+    if (typeof result === 'string') {
       setServerError(result);
     } else if (Array.isArray(result.data)) {
       setSearchResult(result.data);
