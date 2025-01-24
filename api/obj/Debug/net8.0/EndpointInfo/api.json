@@ -17,7 +17,7 @@
         }
       }
     },
-    "/api/comment/id": {
+    "/api/comment/{id}": {
       "get": {
         "tags": [
           "Comment"
@@ -25,28 +25,6 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/comment/{stockId}": {
-      "post": {
-        "tags": [
-          "Comment"
-        ],
-        "parameters": [
-          {
-            "name": "stockId",
             "in": "path",
             "required": true,
             "schema": {
@@ -55,38 +33,12 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCommentDto"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCommentDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCommentDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCommentDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/comment/{id}": {
+      },
       "put": {
         "tags": [
           "Comment"
@@ -154,10 +106,103 @@
         }
       }
     },
+    "/api/comment/{stockId}": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/stock": {
       "get": {
         "tags": [
           "Stock"
+        ],
+        "parameters": [
+          {
+            "name": "Symbol",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CompanyName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IsDecsending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -295,43 +340,65 @@
   "components": {
     "schemas": {
       "CreateCommentDto": {
+        "required": [
+          "content",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 280,
+            "minLength": 5,
+            "type": "string"
           },
           "content": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 280,
+            "minLength": 5,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "CreateStockRequestDto": {
+        "required": [
+          "companyName",
+          "industry",
+          "lastDiv",
+          "purchase",
+          "symbol"
+        ],
         "type": "object",
         "properties": {
           "symbol": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "companyName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "purchase": {
+            "maximum": 1000000000,
+            "minimum": 1,
             "type": "number",
             "format": "double"
           },
           "lastDiv": {
+            "maximum": 100,
+            "minimum": 0.001,
             "type": "number",
             "format": "double"
           },
           "industry": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "marketCap": {
+            "maximum": 5000000000,
+            "minimum": 1,
             "type": "integer",
             "format": "int64"
           }
@@ -339,43 +406,65 @@
         "additionalProperties": false
       },
       "UpdateCommentRequestDto": {
+        "required": [
+          "content",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 280,
+            "minLength": 5,
+            "type": "string"
           },
           "content": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 280,
+            "minLength": 5,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "UpdateStockRequestDto": {
+        "required": [
+          "companyName",
+          "industry",
+          "lastDiv",
+          "purchase",
+          "symbol"
+        ],
         "type": "object",
         "properties": {
           "symbol": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "companyName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "purchase": {
+            "maximum": 1000000000,
+            "minimum": 1,
             "type": "number",
             "format": "double"
           },
           "lastDiv": {
+            "maximum": 100,
+            "minimum": 0.001,
             "type": "number",
             "format": "double"
           },
           "industry": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "marketCap": {
+            "maximum": 5000000000,
+            "minimum": 1,
             "type": "integer",
             "format": "int64"
           }
